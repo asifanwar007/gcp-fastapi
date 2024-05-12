@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Project For Seminar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #error-red {
+          color: red;
+        }
+        #success-green {
+          color: green;
+        }
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], button {
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user_token %}
+        <form action="/" method="get" style="display: inline;">
+            <button type="submit">Home</button>
+        </form>
+        <h2>Add New Room</h2>
+        <form action="/add-room" method="post">
+            <p>*Room Name Should be unique</p>
+            *Room Name: <input type="text" name="room_id" placeholder="e.g. room_001" required/> 
+            <button type="submit">Add Room</button> 
+        </form>
+        {% if room_info %} 
+        <p>{{ room_info | safe }}</p> 
+        {% endif %}
+        <br/>
+        <br/>
+        <h2>Delete Room by Room Id</h2>
+        <form action="/delete-room" method="post">
+            Room Name: <input type="text" name="room_id" required/> <br />
+            <button type="submit">Delete Room</button> 
+        </form>
+        {% if delete_info %} 
+        <p>{{ delete_info | safe }}</p>
+        {% endif %}
+        <br/>
+        <form action="/allrooms" method="get">
+          <button type="submit">See All Rooms Created</button> 
+        </form>
+        {% for room in all_rooms %}
+          <h2>{{room}}</h2>
+        {% endfor %}
+
+        {% endif %} 
+    </div>
+</body>
+</html>
